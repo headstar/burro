@@ -1,2 +1,2 @@
 # burro
-Work queue for batching operations
+Java library to support batching of operations
