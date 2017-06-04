@@ -1,0 +1,70 @@
+plugins {
+    id 'net.researchgate.release' version '2.4.0'
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.14'
+}
+
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+apply plugin: 'jacoco'
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+
+apply from: "$rootDir/gradle/javaprojects.gradle"
+
+group = 'com.tango.common'
+
+ext {
+    slf4jApiVersion = '1.7.7'
+    junitVersion = '4.12'
+    guavaVersion = '18.0'
+    logbackClassicVersion = '1.0.13'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile "org.slf4j:slf4j-api:$slf4jApiVersion"
+    compile "com.google.guava:guava:$guavaVersion"
+
+    testCompile "junit:junit:$junitVersion"
+    testRuntime "ch.qos.logback:logback-classic:$logbackClassicVersion"
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled false
+        csv.enabled false
+    }
+}
+test.finalizedBy jacocoTestReport
+
+task sourceJar(type: Jar) {
+    from sourceSets.main.allJava
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+
+            artifact sourceJar {
+                classifier "sources"
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            url "$buildDir/repo"
+        }
+    }
+}
+
+afterReleaseBuild.dependsOn publish
+
+
