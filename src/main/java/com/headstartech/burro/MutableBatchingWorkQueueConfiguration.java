@@ -1,6 +1,5 @@
 package com.headstartech.burro;
 
-import com.google.common.base.Preconditions;
 
 /**
  * Mutable (and thread-safe) implementation of {@Link BatchingWorkQueueConfiguration}.
@@ -54,26 +53,26 @@ public class MutableBatchingWorkQueueConfiguration implements BatchingWorkQueueC
     }
 
     public void setMinBatchSize(int minBatchSize) {
-        Preconditions.checkArgument(minBatchSize >=1, "minBatchSize must be >= 1");
-        Preconditions.checkArgument(minBatchSize <= maxBatchSize, "minBatchSize must be <= maxBatchSize");
+        checkArgument(minBatchSize >=1, "minBatchSize must be >= 1");
+        checkArgument(minBatchSize <= maxBatchSize, "minBatchSize must be <= maxBatchSize");
         this.minBatchSize = minBatchSize;
     }
 
     public void setMaxBatchSize(int maxBatchSize) {
-        Preconditions.checkArgument(maxBatchSize >=1, "maxBatchSize must be >= 1");
-        Preconditions.checkArgument(maxBatchSize >= minBatchSize, "maxBatchSize must be >= minBatchSize");
+        checkArgument(maxBatchSize >=1, "maxBatchSize must be >= 1");
+        checkArgument(maxBatchSize >= minBatchSize, "maxBatchSize must be >= minBatchSize");
         this.maxBatchSize = maxBatchSize;
     }
 
     public void setMaxWriteDelay(int maxWriteDelay) {
-        Preconditions.checkArgument(maxWriteDelay >= 0, "maxDelay must be >= 0");
-        Preconditions.checkArgument(maxWriteDelay >= minWriteDelay, "maxDelay must be >= minDelay");
+        checkArgument(maxWriteDelay >= 0, "maxDelay must be >= 0");
+        checkArgument(maxWriteDelay >= minWriteDelay, "maxDelay must be >= minDelay");
         this.maxWriteDelay = maxWriteDelay;
     }
 
     public void setMinWriteDelay(int minWriteDelay) {
-        Preconditions.checkArgument(minWriteDelay >= 0, "minDelay must be >= 0");
-        Preconditions.checkArgument(minWriteDelay <= maxWriteDelay, "minDelay must be <= maxDelay");
+        checkArgument(minWriteDelay >= 0, "minDelay must be >= 0");
+        checkArgument(minWriteDelay <= maxWriteDelay, "minDelay must be <= maxDelay");
         this.minWriteDelay = minWriteDelay;
     }
 
@@ -82,7 +81,13 @@ public class MutableBatchingWorkQueueConfiguration implements BatchingWorkQueueC
     }
 
     public void setSleepIntervalWhenEmpty(int sleepIntervalWhenEmpty) {
-        Preconditions.checkArgument(sleepIntervalWhenEmpty >= 0, "sleepIntervalWhenEmpty must be >= 0");
+        checkArgument(sleepIntervalWhenEmpty >= 0, "sleepIntervalWhenEmpty must be >= 0");
         this.sleepIntervalWhenEmpty = sleepIntervalWhenEmpty;
+    }
+
+    private static void checkArgument(boolean expression, Object errorMessage) {
+        if (!expression) {
+            throw new IllegalArgumentException(String.valueOf(errorMessage));
+        }
     }
 }
