@@ -2,7 +2,7 @@ package com.headstartech.burro;
 
 
 /**
- * Mutable (and thread-safe) implementation of {@Link BatchingWorkQueueConfiguration}.
+ * Mutable (and thread-safe) implementation of {@link BatchingWorkQueueConfiguration}.
  */
 public class MutableBatchingWorkQueueConfiguration implements BatchingWorkQueueConfiguration {
 

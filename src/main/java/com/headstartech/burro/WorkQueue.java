@@ -11,25 +11,25 @@ public interface WorkQueue<T> {
      * Adds an item to the queue. Will return immediately (return value indicates success/failure).
      *
      * @param item item to add
-     * @return <code>true</code> if item was added, <false>otherwise</false>
+     * @return {@code true} if item was added, {@code false} otherwise
      */
     boolean add(T item);
 
     /**
+     * Adds an item to the queue.
      *
-     *
-     * @param item
-     * @param duration
-     * @param unit
-     * @return
-     * @throws InterruptedException
+     * @param item item to add
+     * @param duration duration to wait
+     * @param unit unit for duration
+     * @return {@code true} if item was added, {@code false} otherwise
+     * @throws InterruptedException if interrupted while waiting
      */
     boolean add(T item, long duration, TimeUnit unit) throws InterruptedException;
 
     /**
      * Returns the remaining capacity. <code>Integer.MAX_VALUE</code> if unbounded.
      *
-     * @return
+     * @return the remaining capacity of the queue
      */
     int remainingCapacity();
 
